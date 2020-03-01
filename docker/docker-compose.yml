@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+
+  pgsql:
+    container_name: pgsql
+    build: ./pgsql
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - ./pgsql/.data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+  php:
+    container_name: php
+    build: ./php
+    ports:
+      - 9000:9000
+    volumes:
+      - ../:/app
+    links:
+      - pgsql
+
+  nginx:
+    container_name: nginx
+    build: ./nginx
+    ports:
+      - 80:80
+    volumes:
+      - ../:/app
+    links:
+      - php
