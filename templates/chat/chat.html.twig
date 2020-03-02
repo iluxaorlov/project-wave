@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chat{% endblock %}
+
+{% block body %}
+    {% if messages is not empty %}
+        {% for message in messages %}
+            {{ message.text }}<br>
+        {% endfor %}
+    {% else %}
+        Нет сообщений
+    {% endif %}
+{% endblock %}

@@ -3,7 +3,6 @@ version: '3.7'
 services:
 
   pgsql:
-    container_name: pgsql
     build: ./pgsql
     restart: always
     ports:
@@ -16,17 +15,14 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
   php:
-    container_name: php
     build: ./php
+    working_dir: /app
     ports:
       - 9000:9000
     volumes:
       - ../:/app
-    links:
-      - pgsql
 
   nginx:
-    container_name: nginx
     build: ./nginx
     ports:
       - 80:80
